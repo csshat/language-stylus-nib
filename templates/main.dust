@@ -1,0 +1,71 @@
+{?options.selector}
+      {@if cond="'{options.inheritFontStyles}'.length || '{textStyles}'.length && '{textStyles.length}' < 2"}
+        {@selector style=options.selectorTextStyle type=options.selectorType}{name}{/selector} {?options.cssStyleSyntax}{~lb}{/options.cssStyleSyntax}{~n}
+      {/if}
+{/options.selector}
+
+{?opacity}{?options.selector}    {/options.selector}opacity: {opacity}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/opacity}
+
+{?options.inheritFontStyles}
+  {#baseTextStyle}
+    {>textStyle selector=options.selector /}{^options.selector}{~n}{/options.selector}
+  {/baseTextStyle}
+{/options.inheritFontStyles}
+
+{#textStyles}
+    {?options.selector}
+      {@if cond="{textStyles.length} > 1"}
+        {! close main selector !}
+        {?options.inheritFontStyles}
+          {?options.cssStyleSyntax}{~rb}{/options.cssStyleSyntax}{~n}
+        {/options.inheritFontStyles}
+        {! open the new one !}
+        {@selector style=options.selectorTextStyle type=options.selectorType ranges=textStyles index=$idx}{text}{/selector} {?options.cssStyleSyntax}{~lb}{/options.cssStyleSyntax}{~n}
+      {/if}
+    {/options.selector}
+
+    {^options.inheritFontStyles}
+      {#baseTextStyle}
+        {>textStyle:baseTextStyle selector=options.selector /}
+      {/baseTextStyle}
+    {/options.inheritFontStyles}
+
+    {>textStyle selector=options.selector /}
+    {?options.selector}{^options.inheritFontStyles}{?options.cssStyleSyntax}{~rb}{/options.cssStyleSyntax}{~n}{/options.inheritFontStyles}{/options.selector}
+    {^options.selector}{@sep}{~n}{/sep}{/options.selector}
+{:else}
+
+{#bounds}
+    {?options.selector}    {/options.selector}width: {width|px}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
+    {?options.selector}    {/options.selector}height: {height|px}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
+{/bounds}
+
+{/textStyles}
+
+{#background}
+    {?color}
+        {?options.selector}    {/options.selector}background-color: {@color type=options.colorType}{color}{/color}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
+    {/color}
+    {?background.gradient}
+        {?options.selector}    {/options.selector}{>gradient gradient=gradient /}
+    {/background.gradient}
+{/background}
+
+{#border}
+    {?options.selector}    {/options.selector}border: {width|px} {style} {@color type=options.colorType}{color}{/color}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
+{/border}
+
+{#radius}
+    {?options.selector}    {/options.selector}border-radius: {radius|radius}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
+{/radius}
+
+{?textStyles}
+    {?shadows}
+        {?options.selector}    {/options.selector}{>shadow kind="text" shadows=shadows /}
+    {/shadows}
+{:else}
+    {?shadows}
+        {?options.selector}    {/options.selector}{>shadow kind="box" shadows=shadows /}
+    {/shadows}
+{/textStyles}
+{?options.selector}{?options.inheritFontStyles}{?options.cssStyleSyntax}{~rb}{/options.cssStyleSyntax}{/options.inheritFontStyles}{/options.selector}

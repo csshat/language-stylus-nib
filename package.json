@@ -1,0 +1,71 @@
+{
+  "name": "csshat-language-stylus-nib",
+  "title": "Stylus (nib)",
+  "version": "1.0.0",
+  "description": "Stylus language",
+  "main": "dust.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csshat/language-stylus-nib"
+  },
+  "bugs": {
+    "url": "https://github.com/csshat/language-stylus-nib/issues"
+  },
+  "author": "Tomas Hanacek <tomashanacek@abdoc.net> (https://github.com/tomashanacek)",
+  "contributors": [
+    "Marek Hrabe <marekhrabe@abdoc.net> (https://github.com/marekhrabe)",
+    "Petr Brzek <petrbrzek@abdoc.net> (https://github.com/petrbrzek)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "octopus-helpers": "^0.2.3"
+  },
+  "settings": {
+    "vendorPrefixes": {
+      "type": "boolean",
+      "default": true
+    },
+    "inheritFontStyles": {
+      "type": "boolean",
+      "default": true
+    },
+    "selector": {
+      "type": "boolean",
+      "default": true
+    },
+    "selectorTextStyle": {
+      "type": "boolean",
+      "options": [
+        "Dash case",
+        "Snake case",
+        "Camel case"
+      ],
+      "default": "Dash case"
+    },
+    "selectorType": {
+      "type": "select",
+      "options": [
+        "id",
+        "class",
+        "element"
+      ],
+      "default": "class"
+    },
+    "colorType": {
+      "type": "select",
+      "options": [
+        "hex",
+        "rgb",
+        "hsl"
+      ],
+      "default": "hex"
+    },
+    "cssStyleSyntax": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "bundledDependencies": [
+    "octopus-helpers"
+  ]
+}
