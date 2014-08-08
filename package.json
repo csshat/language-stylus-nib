@@ -31,7 +31,7 @@
     },
     "selector": {
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "selectorTextStyle": {
       "type": "boolean",
@@ -63,6 +63,10 @@
     "cssStyleSyntax": {
       "type": "boolean",
       "default": false
+    },
+    "showTextSnippet": {
+      "type": "boolean",
+      "default": true
     }
   },
   "bundledDependencies": [

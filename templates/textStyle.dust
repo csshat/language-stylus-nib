@@ -1,19 +1,19 @@
-{?color}{?selector}    {/selector}color: {@color type=options.colorType}{color}{/color}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/color}
+{?color}{?selector}    {/selector}color{?options.cssStyleSyntax}:{/options.cssStyleSyntax} {@color type=options.colorType}{color}{/color}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/color}
 {?font}
   {@font font=font}
-      {?font.name}{?selector}    {/selector}font-family: "{font.name}"{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.name}
-      {?font.size}{?selector}    {/selector}font-size: {font.size|px}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.size}
-      {?font.weight}{?selector}    {/selector}font-weight: {font.weight}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.weight}
-      {?font.style}{?selector}    {/selector}font-style: {font.style}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.style}
+      {?font.name}{?selector}    {/selector}font-family{?options.cssStyleSyntax}:{/options.cssStyleSyntax} "{font.name}"{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.name}
+      {?font.size}{?selector}    {/selector}font-size{?options.cssStyleSyntax}:{/options.cssStyleSyntax} {font.size|px}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.size}
+      {?font.weight}{?selector}    {/selector}font-weight{?options.cssStyleSyntax}:{/options.cssStyleSyntax} {font.weight}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.weight}
+      {?font.style}{?selector}    {/selector}font-style{?options.cssStyleSyntax}:{/options.cssStyleSyntax} {font.style}{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.style}
 
       {@if cond="'{font.underline}' || '{font.linethrough}'"}
-          {?selector}    {/selector}text-decoration:{~s}
+          {?selector}    {/selector}text-decoration{?options.cssStyleSyntax}:{/options.cssStyleSyntax}{~s}
           {?font.underline}underline{/font.underline}
           {?font.linethrough}{?font.underline} {/font.underline}line-through{/font.linethrough}
           {?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}
       {/if}
 
-      {?font.uppercase}{?selector}    {/selector}text-transform: uppercase{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.uppercase}
-      {?font.smallcaps}{?selector}    {/selector}font-variant: small-caps{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.smallcaps}
+      {?font.uppercase}{?selector}    {/selector}text-transform{?options.cssStyleSyntax}:{/options.cssStyleSyntax} uppercase{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.uppercase}
+      {?font.smallcaps}{?selector}    {/selector}font-variant{?options.cssStyleSyntax}:{/options.cssStyleSyntax} small-caps{?options.cssStyleSyntax};{/options.cssStyleSyntax}{~n}{/font.smallcaps}
   {/font}
 {/font}
