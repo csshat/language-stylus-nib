@@ -4,6 +4,11 @@
   "version": "1.0.0",
   "description": "Stylus language",
   "main": "dust.js",
+  "scope": "source.stylus",
+  "engines": {
+    "csshat": "~2.0.0",
+    "avocode": "*"
+  },
   "homepage": "https://github.com/csshat/language-stylus-nib",
   "repository": {
     "type": "git",
