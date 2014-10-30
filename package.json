@@ -1,7 +1,7 @@
 {
   "name": "csshat-language-stylus-nib",
   "title": "Stylus (nib)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stylus language",
   "main": "dust.js",
   "scope": "source.stylus",
