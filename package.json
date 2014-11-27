@@ -3,8 +3,9 @@
   "title": "Stylus (nib)",
   "version": "1.0.1",
   "description": "Stylus language",
-  "main": "dust.js",
+  "main": "main",
   "scope": "source.stylus",
+  "codeLanguage": true,
   "engines": {
     "csshat": "~2.0.0",
     "avocode": "*"
@@ -17,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/csshat/language-stylus-nib/issues"
   },
-  "author": "Tomas Hanacek <tomashanacek@abdoc.net> (https://github.com/tomashanacek)",
+  "author": "Tomas Hanacek <tomashanacek@avocode.com> (https://github.com/tomashanacek)",
   "contributors": [
     "Marek Hrabe <marekhrabe@abdoc.net> (https://github.com/marekhrabe)",
     "Petr Brzek <petrbrzek@abdoc.net> (https://github.com/petrbrzek)"
