@@ -25,19 +25,48 @@ _comment = ($, text) ->
   $ "// #{text}"
 
 
+_textDecoration = (font) ->
+  textDecoration = []
+
+  if font.underline
+    textDecoration.push('underline')
+
+  if font.linethrough
+    textDecoration.push('line-through')
+
+  textDecoration
+
+
+_convertFontStyleName: (fontType) ->
+  fontStyles = css.fontStyleNameToCSS(fontType)
+
+  ret = {}
+  ret[fontStyle.property] = fontStyle.value for fontStyle in fontStyles
+  ret
+
+
 _fontStyles = (declaration, colorFormat, {font, color}) ->
   declaration('color', colorFormat(color)) if color?
 
   if font
+    font = _.assign(font, _convertFontStyleName(font.type))
+
     declaration('font-family', font.name)
     declaration('font-size', font.size, px)
     declaration('font-weight', font.weight)
     declaration('font-style', font.style)
+    declaration('line-height', font.lineHeight, px)
+    declaration('letter-spacing', font.letterSpacing, px)
 
-    if font.underline?
-      declaration('text-decoration', 'underline')
-    else if font.linethrough?
-      declaration('text-decoration', 'line-through')
+    textDecoration = _textDecoration(font)
+    if textDecoration.length
+      declaration('text-decoration', textDecoration.join(' '))
+
+    if font.uppercase
+      declaration('text-transform', 'uppercase')
+
+    if font.smallcaps
+      declaration('font-variant', 'small-caps')
 
 
 _colorFormat = (colors, colorType, color) ->
