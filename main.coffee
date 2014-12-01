@@ -37,7 +37,7 @@ _textDecoration = (font) ->
   textDecoration
 
 
-_convertFontStyleName: (fontType) ->
+_convertFontStyleName = (fontType) ->
   fontStyles = css.fontStyleNameToCSS(fontType)
 
   ret = {}
@@ -99,7 +99,7 @@ class Stylus
     if @options.showTextSnippet
       if @textStyles?
         if @textStyles.length > 1 and @options.inheritFontStyles?
-          comment(baseTextStyle)
+          comment(baseTextComment)
         else
           comment("#{textComment} #{trimName(@name)}")
       else
@@ -112,7 +112,7 @@ class Stylus
 
     declaration('opacity', @opacity)
 
-    if @bounds
+    if @type != 'textLayer' and @bounds
       if @bounds.width == @bounds.height
         declaration('size', @bounds.width, px)
       else
