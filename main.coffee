@@ -49,7 +49,7 @@ _fontStyles = (declaration, colorFormat, {font, color}) ->
   declaration('color', colorFormat(color)) if color?
 
   if font
-    font = _.assign(font, _convertFontStyleName(font.type))
+    font = _.assign(font, _convertFontStyleName(font.type)) if font.type
 
     declaration('font-family', font.name)
     declaration('font-size', font.size, px)
@@ -69,17 +69,33 @@ _fontStyles = (declaration, colorFormat, {font, color}) ->
       declaration('font-variant', 'small-caps')
 
 
-_colorFormat = (colors, colorType, color) ->
-  hexColor = tinycolor(color).toHexString(true)
-  colorVariable = colors[hexColor]
+_getColorVariable = (useColorName, colorVariables, color) ->
+  colorObj = tinycolor(color)
+  hexColor = colorObj.toHexString(true)
+  colorVariable = colorVariables[hexColor]
 
-  if colorVariable?
-    if color.a < 1
-      "fade-out(#{colorVariable}, #{1 - color.a})"
-    else
-      colorVariable
+  if not colorVariable and useColorName
+    colorVariable = colorObj.toName()
+
+  colorVariable
+
+
+colorFormat = (renderColor, options, color) ->
+  colorVariable = _getColorVariable(options.useColorName, options.colors, color)
+  if colorVariable
+    renderColor(color, colorVariable)
   else
-    css.color(color, colorType)
+    css.color(color, options.colorType)
+
+
+renderColor = (color, colorVariable) ->
+  if color.a < 1
+    "fade-out(#{colorVariable}, #{1 - color.a})"
+  else
+    colorVariable
+
+
+_colorFormat = _.partial(css.colorFormat, renderColor)
 
 
 class Stylus
@@ -88,7 +104,7 @@ class Stylus
     $$ = $.indents
     declaration = _.partial(_declaration, $.indents, @options.cssStyleSyntax)
     comment = _.partial(_comment, $)
-    colorFormat = _.partial(_colorFormat, @options.colors, @options.colorType)
+    colorFormat = _.partial(_colorFormat, @options)
     fontStyles = _.partial(_fontStyles, declaration, colorFormat)
 
     baseTextComment = 'Base text style'
