@@ -43,11 +43,11 @@
     "selectorTextStyle": {
       "type": "hidden",
       "options": [
-        "Dash case",
-        "Snake case",
-        "Camel case"
+        "dash-case",
+        "snake_case",
+        "camelCase"
       ],
-      "default": "Dash case"
+      "default": "dash-case"
     },
     "selectorType": {
       "type": "select",
@@ -74,6 +74,31 @@
     "showTextSnippet": {
       "type": "boolean",
       "default": true
+    },
+    "showAbsolutePositions": {
+      "type": "boolean",
+      "default": false
+    },
+    "unit": {
+      "type": "hidden",
+      "options": [
+        "px",
+        "em",
+        "rem"
+      ],
+      "default": "px"
+    },
+    "useColorName": {
+      "type": "boolean",
+      "default": true
+    },
+    "quoteType": {
+      "type": "select",
+      "options": [
+        "'",
+        "\""
+      ],
+      "default": "\""
     }
   },
   "bundledDependencies": [
