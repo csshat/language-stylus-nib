@@ -1,7 +1,6 @@
 _ = require 'lodash'
 {trimName, selector} = require './helpers'
 {css} = require 'octopus-helpers'
-{px} = css
 tinycolor = require 'tinycolor2'
 
 
@@ -25,67 +24,7 @@ _comment = ($, text) ->
   $ "// #{text}"
 
 
-_textDecoration = (font) ->
-  textDecoration = []
-
-  if font.underline
-    textDecoration.push('underline')
-
-  if font.linethrough
-    textDecoration.push('line-through')
-
-  textDecoration
-
-
-_convertFontStyleName = (fontType) ->
-  fontStyles = css.fontStyleNameToCSS(fontType)
-
-  ret = {}
-  ret[fontStyle.property] = fontStyle.value for fontStyle in fontStyles
-  ret
-
-
-_fontStyles = (declaration, colorFormat, {font, color}) ->
-  declaration('color', colorFormat(color)) if color?
-
-  if font
-    font = _.assign(font, _convertFontStyleName(font.type)) if font.type
-
-    declaration('font-family', font.name)
-    declaration('font-size', font.size, px)
-    declaration('font-weight', font.weight)
-    declaration('font-style', font.style)
-    declaration('line-height', font.lineHeight, px)
-    declaration('letter-spacing', font.letterSpacing, px)
-
-    textDecoration = _textDecoration(font)
-    if textDecoration.length
-      declaration('text-decoration', textDecoration.join(' '))
-
-    if font.uppercase
-      declaration('text-transform', 'uppercase')
-
-    if font.smallcaps
-      declaration('font-variant', 'small-caps')
-
-
-_getColorVariable = (useColorName, colorVariables, color) ->
-  colorObj = tinycolor(color)
-  hexColor = colorObj.toHexString(true)
-  colorVariable = colorVariables[hexColor]
-
-  if not colorVariable and useColorName
-    colorVariable = colorObj.toName()
-
-  colorVariable
-
-
-colorFormat = (renderColor, options, color) ->
-  colorVariable = _getColorVariable(options.useColorName, options.colors, color)
-  if colorVariable
-    renderColor(color, colorVariable)
-  else
-    css.color(color, options.colorType)
+_convertColor = _.partial(css.convertColor, renderColor)
 
 
 renderColor = (color, colorVariable) ->
@@ -95,7 +34,12 @@ renderColor = (color, colorVariable) ->
     colorVariable
 
 
-_colorFormat = _.partial(css.colorFormat, renderColor)
+defineVariable = (name, value, options) ->
+  semicolon = if options.cssStyleSyntax then ';' else ''
+  "#{name} = #{value}#{semicolon}"
+
+
+renderVariable = (name) -> name
 
 
 class Stylus
@@ -104,8 +48,9 @@ class Stylus
     $$ = $.indents
     declaration = _.partial(_declaration, $.indents, @options.cssStyleSyntax)
     comment = _.partial(_comment, $)
-    colorFormat = _.partial(_colorFormat, @options)
-    fontStyles = _.partial(_fontStyles, declaration, colorFormat)
+    unit = _.partial(css.unit, 'px')
+    convertColor = _.partial(_convertColor, @options)
+    fontStyles = _.partial(css.fontStyles, declaration, convertColor, unit, "'")
 
     baseTextComment = 'Base text style'
     textComment = 'Text style for'
@@ -123,16 +68,16 @@ class Stylus
 
     # This option add selector according to name of the layer
     if @options.selector
-        curlyBracket = if @options.cssStyleSyntax then ' {' else ''
-        $ '%s%s', selector(@), curlyBracket
+      curlyBracket = if @options.cssStyleSyntax then ' {' else ''
+      $ '%s%s', selector(@), curlyBracket
 
     declaration('opacity', @opacity)
 
     if @type != 'textLayer' and @bounds
       if @bounds.width == @bounds.height
-        declaration('size', @bounds.width, px)
+        declaration('size', @bounds.width, unit)
       else
-        declaration('size', "#{px(@bounds.width)} #{px(@bounds.height)}")
+        declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
 
     if @options.inheritFontStyles and @baseTextStyle?
       fontStyles(@baseTextStyle)
@@ -141,19 +86,23 @@ class Stylus
       fontStyles(textStyle) for textStyle in @textStyles
 
     if @background
-      declaration('background-color', @background.color, colorFormat)
+      declaration('background-color', @background.color, convertColor)
+
+    if @borders
+      border = @borders[0]
+      declaration('border', "#{unit(border.width)} #{border.style} #{convertColor(border.color)}")
+
+    declaration('border-radius', @radius, css.radius)
+
+    if @shadows
+      if @type == 'textLayer'
+        declaration('text-shadow', css.convertTextShadows(convertColor, unit, @shadows))
+      else
+        declaration('box-shadow', css.convertShadows(convertColor, unit, @shadows))
 
     # Close block code definition if selector option is choosen
     if @options.selector and @options.cssStyleSyntax
         $ '}'
-
-
-defineVariable = (name, value, options) ->
-  semicolon = if options.cssStyleSyntax then ';' else ''
-  "#{name} = #{value}#{semicolon}"
-
-
-renderVariable = (name) -> name
 
 
 module.exports = {defineVariable, renderVariable, renderClass: Stylus}

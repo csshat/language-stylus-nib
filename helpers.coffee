@@ -1,5 +1,5 @@
-css = require('octopus-helpers').css
 utils = require('octopus-helpers').utils
+
 
 trimName = (value) ->
   value = value.replace(/\s{2,}/, ' ').trim()
@@ -23,7 +23,7 @@ selector = ({options, name, type, id}) ->
     when 'class' then prefix = '.'
     else prefix = ''
 
-  name = utils.format(name, style)
+  # name = utils.format(name, style)
 
   name = (type.toLowerCase() + id) unless name.length
 
