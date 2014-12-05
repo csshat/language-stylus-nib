@@ -113,6 +113,10 @@ class Stylus
       if @background
         declaration('background-color', @background.color, convertColor)
 
+        if @background.gradient
+          gradientStr = css.convertGradients(convertColor, @background.gradient)
+          declaration('background-image', gradientStr) if gradientStr
+
       if @borders
         border = @borders[0]
         declaration('border', "#{unit(border.width)} #{border.style} #{convertColor(border.color)}")
