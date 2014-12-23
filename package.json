@@ -41,7 +41,7 @@
       "default": false
     },
     "selectorTextStyle": {
-      "type": "hidden",
+      "type": "select",
       "options": [
         "dash-case",
         "snake_case",

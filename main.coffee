@@ -86,6 +86,12 @@ class Stylus
             declaration('left', @bounds.left, unit)
             declaration('top', @bounds.top, unit)
 
+          if @bounds
+            if @bounds.width == @bounds.height
+              declaration('size', @bounds.width, unit)
+            else
+              declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
+
           declaration('opacity', @opacity)
           if @shadows
             declaration('text-shadow', css.convertTextShadows(convertColor, unit, @shadows))
