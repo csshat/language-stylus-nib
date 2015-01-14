@@ -3,7 +3,7 @@ _ = require 'lodash'
 
 
 _declaration = ($$, cssStyleSyntax, property, value, modifier) ->
-  return unless value?
+  return unless value
 
   if cssStyleSyntax
     colon = ':'
@@ -25,8 +25,8 @@ renderColor = (color, colorVariable) ->
     colorVariable
 
 
-_comment = ($, showTextSnippet, text) ->
-  return unless showTextSnippet
+_comment = ($, showComments, text) ->
+  return unless showComments
   $ "// #{text}"
 
 _convertColor = _.partial(css.convertColor, renderColor)
@@ -55,7 +55,7 @@ class Stylus
   render: ($) ->
     $$ = $.indents
     declaration = _.partial(_declaration, $.indents, @options.cssStyleSyntax)
-    comment = _.partial(_comment, $, @options.showTextSnippet)
+    comment = _.partial(_comment, $, @options.showComments)
     unit = _.partial(css.unit, @options.unit)
     convertColor = _.partial(_convertColor, @options)
     fontStyles = _.partial(css.fontStyles, declaration, convertColor, unit, @options.quoteType)
