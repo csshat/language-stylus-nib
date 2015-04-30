@@ -1,7 +1,7 @@
 {
   "name": "csshat-language-stylus-nib",
   "title": "Stylus (nib)",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Stylus language",
   "main": "main",
   "scope": "source.stylus",
