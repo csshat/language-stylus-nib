@@ -29,18 +29,22 @@
   },
   "settings": {
     "inheritFontStyles": {
+      "description": "Group common styles for selected layers.",
       "type": "boolean",
       "default": true
     },
     "cssStyleSyntax": {
       "type": "boolean",
+      "description": "Make code output more CSS-compatible by disabling Stylus features like omitting colons and semicolons.",
       "default": false
     },
     "showComments": {
+      "description": "Show a brief description of selected layers.",
       "type": "boolean",
       "default": true
     },
     "showAbsolutePositions": {
+      "description": "Show absolute X and Y coordinates for all layers.",
       "type": "boolean",
       "default": false
     },
@@ -54,10 +58,12 @@
       "default": "px"
     },
     "useColorName": {
+      "description": "Show color name values of common colors rather than hex codes.",
       "type": "boolean",
       "default": true
     },
     "selector": {
+      "description": "Wrap code in a css selector.",
       "type": "boolean",
       "default": false
     },
