@@ -28,10 +28,6 @@
     "octopus-helpers": "^1.2.0"
   },
   "settings": {
-    "vendorPrefixes": {
-      "type": "boolean",
-      "default": true
-    },
     "inheritFontStyles": {
       "type": "boolean",
       "default": true
