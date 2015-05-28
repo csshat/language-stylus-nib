@@ -25,7 +25,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "octopus-helpers": "^1.2.0"
+    "octopus-helpers": "^1.5.0"
   },
   "settings": {
     "inheritFontStyles": {
@@ -48,8 +48,13 @@
       "type": "boolean",
       "default": false
     },
+    "useColorName": {
+      "description": "Show color name values of common colors rather than hex codes.",
+      "type": "boolean",
+      "default": true
+    },
     "unit": {
-      "type": "hidden",
+      "type": "select",
       "options": [
         "px",
         "em",
@@ -57,10 +62,21 @@
       ],
       "default": "px"
     },
-    "useColorName": {
-      "description": "Show color name values of common colors rather than hex codes.",
-      "type": "boolean",
-      "default": true
+    "emValue": {
+      "description": "1 em = x px — Ammount of pixels that correspond to one em. Em value is **not** relative to parent element.",
+      "type": "text",
+      "default": 16,
+      "validate": "setNumberValue",
+      "showFor": "unit",
+      "showWhen": "em"
+    },
+    "remValue": {
+      "description": "1 rem = x px — Ammount of pixels that correspond to one rem",
+      "type": "text",
+      "default": 16,
+      "validate": "setNumberValue",
+      "showFor": "unit",
+      "showWhen": "rem"
     },
     "selector": {
       "description": "Wrap code in a css selector.",

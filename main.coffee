@@ -2,6 +2,14 @@ _ = require 'lodash'
 {css, utils} = require 'octopus-helpers'
 
 
+setNumberValue = (number) ->
+  converted = parseInt(number, 10)
+  if not number.match(/^\d+(\.\d+)?$/)
+    return 'Please enter numeric value'
+  else
+    return converted
+
+
 _declaration = ($$, cssStyleSyntax, property, value, modifier) ->
   return if not value? or value == ''
 
@@ -56,7 +64,13 @@ class Stylus
     $$ = $.indents
     declaration = _.partial(_declaration, $.indents, @options.cssStyleSyntax)
     comment = _.partial(_comment, $, @options.showComments)
-    unit = _.partial(css.unit, @options.unit)
+
+    rootValue = switch @options.unit
+      when 'px' then 0
+      when 'em' then @options.emValue
+      when 'rem' then @options.remValue
+    unit = _.partial(css.unit, @options.unit, rootValue)
+
     convertColor = _.partial(_convertColor, @options)
     fontStyles = _.partial(css.fontStyles, declaration, convertColor, unit, @options.quoteType)
 
@@ -136,4 +150,4 @@ class Stylus
       endSelector()
 
 
-module.exports = {defineVariable, renderVariable, renderClass: Stylus}
+module.exports = {defineVariable, renderVariable, setNumberValue, renderClass: Stylus}
