@@ -100,7 +100,7 @@ class Stylus
               if @bounds.left is @bounds.top is 0
                 declaration('absolute', "top left")
               else
-                declaration('absolute', "top #{unit(@bounds.left)} left #{unit(@bounds.top)}")
+                declaration('absolute', "top #{unit(@bounds.top)} left #{unit(@bounds.left)}")
             else
               declaration('position', 'absolute')
               declaration('left', @bounds.left, unit)
