@@ -96,15 +96,25 @@ class Stylus
 
         if not @options.inheritFontStyles or textStyle.base
           if @options.showAbsolutePositions
-            declaration('position', 'absolute')
-            declaration('left', @bounds.left, unit)
-            declaration('top', @bounds.top, unit)
+            if @options.enableNib
+              if @bounds.left is @bounds.top is 0
+                declaration('absolute', "top left")
+              else
+                declaration('absolute', "top #{unit(@bounds.left)} left #{unit(@bounds.top)}")
+            else
+              declaration('position', 'absolute')
+              declaration('left', @bounds.left, unit)
+              declaration('top', @bounds.top, unit)
 
           if @bounds
-            if @bounds.width == @bounds.height
-              declaration('size', @bounds.width, unit)
+            if @options.enableNib
+              if @bounds.width == @bounds.height
+                declaration('size', @bounds.width, unit)
+              else
+                declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
             else
-              declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
+              declaration('width', @bounds.width, unit)
+              declaration('height: ', @bounds.height, unit)
 
           declaration('opacity', @opacity)
           if @shadows
@@ -119,15 +129,25 @@ class Stylus
       startSelector(@name)
 
       if @options.showAbsolutePositions
-        declaration('position', 'absolute')
-        declaration('left', @bounds.left, unit)
-        declaration('top', @bounds.top, unit)
+        if @options.enableNib
+          if @bounds.left is @bounds.top is 0
+            declaration('absolute', "top left")
+          else
+            declaration('absolute', "top #{unit(@bounds.top)} left #{unit(@bounds.left)}")
+        else
+          declaration('position', 'absolute')
+          declaration('left', @bounds.left, unit)
+          declaration('top', @bounds.top, unit)
 
       if @bounds
-        if @bounds.width == @bounds.height
-          declaration('size', @bounds.width, unit)
+        if @options.enableNib
+          if @bounds.width == @bounds.height
+            declaration('size', @bounds.width, unit)
+          else
+            declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
         else
-          declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
+          declaration('width', @bounds.width, unit)
+          declaration('height', @bounds.height, unit)
 
       declaration('opacity', @opacity)
 
