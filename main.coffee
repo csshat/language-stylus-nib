@@ -114,7 +114,7 @@ class Stylus
                 declaration('size', "#{unit(@bounds.width)} #{unit(@bounds.height)}")
             else
               declaration('width', @bounds.width, unit)
-              declaration('height: ', @bounds.height, unit)
+              declaration('height', @bounds.height, unit)
 
           declaration('opacity', @opacity)
           if @shadows
